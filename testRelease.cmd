@@ -30,6 +30,7 @@ setlocal
 set prompt=%0$s$g$s
 echo( & echo   %~nx0 starts...
 
+set project=%~p
 set $scriptFileToTest=%~p0release.cmd
 set $currentVersionBatchFile=%~p0setCurrentVersion.cmd
 set $currentVersionBatchFileSave=%~p0setCurrentVersion.cmd.sav
@@ -44,7 +45,8 @@ copy %$currentVersionBatchFile% %$currentVersionBatchFileSave%
 echo( & echo   Creating test version number file '%$currentVersionBatchFile%' with the following content:
 (echo @set $currentMajorVersion=0) >  %$currentVersionBatchFile%
 (echo @set $currentMinorVersion=0) >> %$currentVersionBatchFile%
-(echo @set $currentVersion=0.0) >> %$currentVersionBatchFile%
+(echo @set $currentPatchVersion=0) >> %$currentVersionBatchFile%
+(echo @set $currentVersion=0.0.0) >> %$currentVersionBatchFile%
 type %$currentVersionBatchFile%
 
 echo( & echo %$separator% & echo   Test: Display help (8 times) ...
@@ -63,27 +65,27 @@ call %$scriptFileToTest% current
 @echo off
 
 echo( & echo %$separator% & echo   Test: Set version number... & echo %$separator% & echo on
-call %$scriptFileToTest% -dryrun 9.9
+call %$scriptFileToTest% --dryrun 9.9
 @echo off
 
 echo( & echo %$separator% & echo   Test: Increase major version number, set minor version number to '0'... & echo %$separator% & echo on
-call %$scriptFileToTest% -dryrun major
+call %$scriptFileToTest% --dryrun major
 @echo off
 
 echo( & echo %$separator% & echo   Test: Increase major version number, set minor version number... & echo %$separator% & echo on
-call %$scriptFileToTest% -dryrun major 2
+call %$scriptFileToTest% --dryrun major 2
 @echo off
 
 echo( & echo %$separator% & echo   Test: Set major version number, keep minor version number the same... & echo %$separator% & echo on
-call %$scriptFileToTest% -dryrun setmajor 4
+call %$scriptFileToTest% --dryrun setmajor 4
 @echo off
 
 echo( & echo %$separator% & echo   Test: Increase minor version number... & echo %$separator% & echo on
-call %$scriptFileToTest% -dryrun minor
+call %$scriptFileToTest% --dryrun minor
 @echo off
 
 echo( & echo %$separator% & echo   Test: Set minor version number... & echo %$separator% & echo on
-call %$scriptFileToTest% -dryrun setminor 4
+call %$scriptFileToTest% --dryrun setminor 4
 @echo off
 
 goto end

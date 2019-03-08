@@ -27,7 +27,7 @@
 @echo off
 setlocal
 set prompt=$s$s$g$s
-::echo( & echo   %~nx0 starts...
+echo( & echo   %~nx0 starts...
 
 if not "%$parent%"=="release.cmd" goto help
 
@@ -36,14 +36,20 @@ if not "%$parent%"=="release.cmd" goto help
 ::
 ::   %$currentMajorVersion%
 ::   %$currentMinorVersion%
-::   %$currentVersion% ... the two of above separated by a '.'
+::   %$currentPatchVersion%
+::   %$currentVersion% ... the above three separated by a '.'
 ::
 ::   %$newMajorVersion%
 ::   %$newMinorVersion%
-::   %$newVersion% ... the two of above separated by a '.'
+::   %$newPatchVersion%
+::   %$newVersion% ... the above three separated by a '.'
 :: ---------------------------------------------------------------------------
 
-set $releaseCommand=C:\Octopus\Octo.exe create-release --project APP --version %$newVersion% --packageversion=%$newVersion%
+:: set $releaseCommand=C:\Octopus\Octo.exe create-release --project APP --version %$newVersion% --packageversion=%$newVersion%
+:: Gerard Ryan - Added 'dotnet publish' release command, 03/2019
+::
+set $releaseCommand="%ProgramFiles%\dotnet\dotnet.exe" publish -c Release /p:Version=%$newVersion% -r win10-x64
+:: End modification
 
 :: ---------------------------------------------------------------------------
 
@@ -52,12 +58,18 @@ goto dryRun
 
 :releaseRun
 echo on
-%$releaseCommand%
+:: Gerard Ryan - Added project-specfic versioning, saved in the respective project directory, 03/2019
+::
+cd "%ProgramFiles(x86)%\Jenkins\workspace\%project%\techoAgentCore\techoAgentCore"
+:: End modification
+%$releaseCommand% 1> nul
+
 @echo off
 goto end
 
 :dryRun
-echo( & echo   DRY RUN - just displaying the release command:
+echo( & echo   DRY RUN - just displaying the release command(s):
+echo( & echo     cd "%ProgramFiles(x86)%\Jenkins\workspace\%project%\techoAgentCore\techoAgentCore"
 echo( & echo     %$releaseCommand%
 goto end
 

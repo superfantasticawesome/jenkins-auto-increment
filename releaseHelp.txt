@@ -1,20 +1,25 @@
   Script to create a release with a version derived from 'setCurrentVersion.cmd'.
 
-  Usage: release -+-----------+--------------------+- ... Display curent version
-                  +- current -+                    |
-                  |                                |
-                  +- -dryrun -+                    |  ... Dry run without actually releasing,
-                  |           |                    |      but displaying the release command (of 'releaseCommand.cmd') only
-                  +-----------+- <major>.<minor> --+  ... Create a version with these numbers
-                  |           +- major ------------+  ... Increase major version number by 1, set minor version number to 0
-                  |           +- major <minor> ----+  ... Increase major version number by 1, set minor version number to <minor>
-                  |           +- setMajor <major> -+  ... Set major version number to <major>
-                  |           +- minor ------------+  ... Increase minor version number by 1
-                  |           +- setMinor <minor> -+  ... Set minor version number to <minor>
-                  |                                |
-                  +- [/|-]?|h | [/|--]help --------+  ... Display this help
+  Usage: release +------------+---------------------------+                      
+                 +- --dryrun  +                           |  Dry run (output 'releaseCommand.cmd' only)
+                 |            |                           | 
+                 +- --project + <project_name>            |  The workspace directory for *this* job
+                 |            |                           |
+                 +-   current +                           |  Display current version
+                 |            |                           |
+                 +------------+- <major>.<minor>.<patch> -+  Create a version with these numbers
+                 |            +- major -------------------+  Increase major version by 1, set minor.patch versions to 0.0
+                 |            +- major <minor> -----------+  Increase major version by 1, set minor version to <minor>, keep patch
+                 |            +- setMajor <major> --------+  Set major version to <major>, keep minor.patch versions
+                 |            +- minor -------------------+  Increase minor version by 1, keep major/patch versions
+                 |            +- minor <patch> -----------+  Increase minor version by 1, keep major, set patch version to <patch>
+                 |            +- setMinor <minor> --------+  Set minor version to <minor>, keep major/patch versions
+                 |            +- patch -------------------+  Increase patch version by 1, keep major.minor versions
+                 |            +- setPatch <patch> --------+  Set patch version to <patch>, keep major.minor versions
+                 |                                        |
+                 +- [/|-]?|h | [/|--]help ----------------+  ... Display this help
 
   Specify:
     - the release command in 'releaseCommand.cmd'
     - the current version in 'setCurrentVersion.cmd'
-  before using one of the release commands above for the first time. Otherwise the current version will be the default '0.0'.
+  BEFORE using one of the release commands above for the first time; otherwise the current version will be the default '0.0.0'.
