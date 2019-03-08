@@ -1,0 +1,20 @@
+  Script to create a release with a version derived from 'setCurrentVersion.cmd'.
+
+  Usage: release -+-----------+--------------------+- ... Display curent version
+                  +- current -+                    |
+                  |                                |
+                  +- -dryrun -+                    |  ... Dry run without actually releasing,
+                  |           |                    |      but displaying the release command (of 'releaseCommand.cmd') only
+                  +-----------+- <major>.<minor> --+  ... Create a version with these numbers
+                  |           +- major ------------+  ... Increase major version number by 1, set minor version number to 0
+                  |           +- major <minor> ----+  ... Increase major version number by 1, set minor version number to <minor>
+                  |           +- setMajor <major> -+  ... Set major version number to <major>
+                  |           +- minor ------------+  ... Increase minor version number by 1
+                  |           +- setMinor <minor> -+  ... Set minor version number to <minor>
+                  |                                |
+                  +- [/|-]?|h | [/|--]help --------+  ... Display this help
+
+  Specify:
+    - the release command in 'releaseCommand.cmd'
+    - the current version in 'setCurrentVersion.cmd'
+  before using one of the release commands above for the first time. Otherwise the current version will be the default '0.0'.
