@@ -88,6 +88,14 @@ echo( & echo %$separator% & echo   Test: Set minor version number... & echo %$se
 call %$scriptFileToTest% --dryrun setminor 4
 @echo off
 
+echo( & echo %$separator% & echo   Test: Increase patch version number by two... & echo %$separator% & echo on
+call %$scriptFileToTest% --dryrun patch 2
+@echo off
+
+echo( & echo %$separator% & echo   Test: Set patch version number to 4... & echo %$separator% & echo on
+call %$scriptFileToTest% --dryrun setPatch 4
+@echo off
+
 goto end
 
 :notExisting
