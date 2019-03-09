@@ -60,7 +60,7 @@ for %%s in ( ? h ) do (
     echo %$separator%
     echo on
     call %$scriptFileToTest% %%s
-    )
+)
 @echo off
 
 echo(  & echo   Test: Display current version (1 times)... & echo %$separator% & echo on
