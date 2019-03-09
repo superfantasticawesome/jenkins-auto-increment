@@ -92,8 +92,8 @@ echo( & echo %$separator% & echo   Test: Set minor version to 4, keep major/patc
 call %$scriptFileToTest% --dryrun --project %project% setMinor 4
 @echo off
 
-echo( & echo %$separator% & echo   Test: Increase patch version by 2, keep major.patch versions... & echo %$separator% & echo on
-call %$scriptFileToTest% --dryrun --project %project% patch 2
+echo( & echo %$separator% & echo   Test: Increase patch version by 1, keep major.minor versions... & echo %$separator% & echo on
+call %$scriptFileToTest% --dryrun --project %project% patch
 @echo off
 
 echo( & echo %$separator% & echo   Test: Set patch version to 4, keep major.minor versions... & echo %$separator% & echo on
