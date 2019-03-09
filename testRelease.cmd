@@ -30,7 +30,7 @@ setlocal
 set prompt=%0$s$g$s
 
 if "%1"=="" (
-    echo( & echo   Enter the project argument on the command line, or type 'release help' at the prompt & goto noargs
+    echo( & echo   ERROR: Enter the project argument on the command line, or type 'release help' at the prompt & goto noargs
 ) else (
     set project=%1
 )
