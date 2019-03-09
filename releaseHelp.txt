@@ -1,4 +1,6 @@
   Script to create a release with a version derived from 'setCurrentVersion.cmd'.
+  NOTE: The '--dryrun' flag must be in position 0 in the list of command line arguments.
+        The '--project' flag is REQUIRED.
 
   Usage: release +------------+---------------------------+                      
                  +- --dryrun  +                           |  Dry run (output 'releaseCommand.cmd' only)
