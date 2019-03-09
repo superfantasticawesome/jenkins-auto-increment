@@ -208,15 +208,6 @@ set $newVersion=%$newMajorVersion%.%$newMinorVersion%.%$newPatchVersion%
 echo   New version: %$newVersion%
 goto release
 
-:keepMajor_incMinor
-echo( & echo   Keeping major version at '%$currentMajorVersion%', increasing minor version '%$currentMinorVersion%' by 1 and keeping patch version '%$currentPatchVersion%'
-set $newMajorVersion=%$currentMajorVersion%
-set /a "$newMinorVersion=$currentMinorVersion+1"
-set $newPatchVersion=%$currentPatchVersion%
-set $newVersion=%$newMajorVersion%.%$newMinorVersion%.%$newPatchVersion%
-echo   New version: %$newVersion%
-goto release
-
 :keepMajor_setMinor_keepPatch
 if "%4"=="" echo( && echo   %~n0 setMinor ^<minor^> argument missing! && goto help
 
