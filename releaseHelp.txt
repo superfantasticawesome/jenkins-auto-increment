@@ -3,7 +3,7 @@
         The '--project' flag is REQUIRED.
 
   Usage: release +------------+---------------------------+
-                 +- --dryrun  +                           |  Dry run (output 'releaseCommand.cmd' only)
+                 +- --dryrun  +                           |  Dry run, optional... Must be in position 0, preceding ''--project' 
                  |            |                           |
                  +- --project + <project_name> (REQUIRED) |  The workspace directory for *this* job (See releaseCommand.cmd)
                  |            |                           |

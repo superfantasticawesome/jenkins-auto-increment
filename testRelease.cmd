@@ -63,7 +63,7 @@ for %%s in ( ? h ) do (
 )
 @echo off
 
-echo(  & echo   Test: Display current version (1 times)... & echo %$separator% & echo on
+echo(  & echo   Test: Display current version (1 time)... & echo %$separator% & echo on
 echo %$separator% & echo on
 call %$scriptFileToTest% --dryrun --project %project% current
 @echo off
@@ -80,12 +80,16 @@ echo( & echo %$separator% & echo   Test: Increase major version by 1, set minor 
 call %$scriptFileToTest% --dryrun --project %project% major 2
 @echo off
 
-echo( & echo %$separator% & echo   Test: Set major version to 6, keep minor.patch versions.. & echo %$separator% & echo on
+echo( & echo %$separator% & echo   Test: Set major version to 6, keep minor.patch versions... & echo %$separator% & echo on
 call %$scriptFileToTest% --dryrun --project %project% setmajor 6
 @echo off
 
 echo( & echo %$separator% & echo   Test: Increase minor version by 1, keep major/patch versions... & echo %$separator% & echo on
 call %$scriptFileToTest% --dryrun --project %project% minor
+@echo off
+
+echo( & echo %$separator% & echo   Test: Increase minor version by 1, set patch version to 6, keep major... & echo %$separator% & echo on
+call %$scriptFileToTest% --dryrun --project %project% minor 6
 @echo off
 
 echo( & echo %$separator% & echo   Test: Set minor version to 4, keep major/patch versions... & echo %$separator% & echo on
