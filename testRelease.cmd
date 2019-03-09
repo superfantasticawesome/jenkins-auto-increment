@@ -30,7 +30,11 @@ setlocal
 set prompt=%0$s$g$s
 echo( & echo   %~nx0 starts...
 
-set project=%~p
+if "%1"=="" (
+    goto end & echo Enter project on the command line
+) else (
+    set project=%1
+)
 set $scriptFileToTest=%~p0release.cmd
 set $currentVersionBatchFile=%~p0setCurrentVersion.cmd
 set $currentVersionBatchFileSave=%~p0setCurrentVersion.cmd.sav
@@ -39,61 +43,59 @@ if not exist %$scriptFileToTest% goto notExisting
 
 set $separator=  ----------------------------------------------------------------------------
 
-echo( & echo   Saving live version number file '%$currentVersionBatchFile%' to '%$currentVersionBatchFileSave%'...
+echo( & echo   Saving live version file '%$currentVersionBatchFile%' to '%$currentVersionBatchFileSave%'...
 copy %$currentVersionBatchFile% %$currentVersionBatchFileSave%
 
-echo( & echo   Creating test version number file '%$currentVersionBatchFile%' with the following content:
+echo( & echo   Creating test version file '%$currentVersionBatchFile%' with the following content:
 (echo @set $currentMajorVersion=0) >  %$currentVersionBatchFile%
 (echo @set $currentMinorVersion=0) >> %$currentVersionBatchFile%
 (echo @set $currentPatchVersion=0) >> %$currentVersionBatchFile%
 (echo @set $currentVersion=0.0.0) >> %$currentVersionBatchFile%
 type %$currentVersionBatchFile%
 
-echo( & echo %$separator% & echo   Test: Display help (8 times) ...
-for %%s in ( ? h help "/?" /h /help -h --help ) do (
+echo( & echo %$separator% & echo   Test: Display help (2 times) ...
+for %%s in ( ? h ) do (
     echo %$separator%
     echo on
     call %$scriptFileToTest% %%s
     )
 @echo off
 
-echo(  & echo   Test: Display current version (2 times)... & echo %$separator% & echo on
-call %$scriptFileToTest%
-@echo off
+echo(  & echo   Test: Display current version (1 times)... & echo %$separator% & echo on
 echo %$separator% & echo on
-call %$scriptFileToTest% current
+call %$scriptFileToTest% --dryrun --project %project% current
 @echo off
 
-echo( & echo %$separator% & echo   Test: Set version number... & echo %$separator% & echo on
-call %$scriptFileToTest% --dryrun 9.9
+echo( & echo %$separator% & echo   Test: Set version to 9.9.9... & echo %$separator% & echo on
+call %$scriptFileToTest% --dryrun --project %project% 9.9.9
 @echo off
 
-echo( & echo %$separator% & echo   Test: Increase major version number, set minor version number to '0'... & echo %$separator% & echo on
-call %$scriptFileToTest% --dryrun major
+echo( & echo %$separator% & echo   Test: Increase major version by 1, set minor.patch versions to '0.0'... & echo %$separator% & echo on
+call %$scriptFileToTest% --dryrun --project %project% major
 @echo off
 
-echo( & echo %$separator% & echo   Test: Increase major version number, set minor version number... & echo %$separator% & echo on
-call %$scriptFileToTest% --dryrun major 2
+echo( & echo %$separator% & echo   Test: Increase major version by 1, set minor version to 2, keep patch version & echo %$separator% & echo on
+call %$scriptFileToTest% --dryrun --project %project% major 2
 @echo off
 
-echo( & echo %$separator% & echo   Test: Set major version number, keep minor version number the same... & echo %$separator% & echo on
-call %$scriptFileToTest% --dryrun setmajor 4
+echo( & echo %$separator% & echo   Test: Set major version to 6, keep minor.patch versions.. & echo %$separator% & echo on
+call %$scriptFileToTest% --dryrun --project %project% setmajor 6
 @echo off
 
-echo( & echo %$separator% & echo   Test: Increase minor version number... & echo %$separator% & echo on
-call %$scriptFileToTest% --dryrun minor
+echo( & echo %$separator% & echo   Test: Increase minor version by 1, keep major/patch versions... & echo %$separator% & echo on
+call %$scriptFileToTest% --dryrun --project %project% minor
 @echo off
 
-echo( & echo %$separator% & echo   Test: Set minor version number... & echo %$separator% & echo on
-call %$scriptFileToTest% --dryrun setminor 4
+echo( & echo %$separator% & echo   Test: Set minor version to 4, keep major/patch versions... & echo %$separator% & echo on
+call %$scriptFileToTest% --dryrun --project %project% setMinor 4
 @echo off
 
-echo( & echo %$separator% & echo   Test: Increase patch version number by two... & echo %$separator% & echo on
-call %$scriptFileToTest% --dryrun patch 2
+echo( & echo %$separator% & echo   Test: Increase patch version by 2, keep major.patch versions... & echo %$separator% & echo on
+call %$scriptFileToTest% --dryrun --project %project% patch 2
 @echo off
 
-echo( & echo %$separator% & echo   Test: Set patch version number to 4... & echo %$separator% & echo on
-call %$scriptFileToTest% --dryrun setPatch 4
+echo( & echo %$separator% & echo   Test: Set patch version to 4, keep major.minor versions... & echo %$separator% & echo on
+call %$scriptFileToTest% --dryrun --project %project% setPatch 4
 @echo off
 
 goto end
@@ -102,7 +104,7 @@ goto end
 echo( & echo   Script file to be tested ('%scriptFileToTest%') does not exist in '%~p0'!
 
 :end
-echo( & echo %$separator% & echo( & echo   Restoring live version number file '%$currentVersionBatchFile%' from '%$currentVersionBatchFileSave%'...
+echo( & echo %$separator% & echo( & echo   Restoring live version file '%$currentVersionBatchFile%' from '%$currentVersionBatchFileSave%'...
 copy %$currentVersionBatchFileSave% %$currentVersionBatchFile%
 echo(
 
