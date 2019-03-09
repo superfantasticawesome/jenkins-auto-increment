@@ -28,13 +28,15 @@
 cls
 setlocal
 set prompt=%0$s$g$s
-echo( & echo   %~nx0 starts...
 
 if "%1"=="" (
-    goto end & echo Enter project on the command line
+    echo( & echo   Enter the project argument on the command line, or type 'release help' at the prompt & goto noargs
 ) else (
     set project=%1
 )
+
+echo( & echo   %~nx0 starts...
+
 set $scriptFileToTest=%~p0release.cmd
 set $currentVersionBatchFile=%~p0setCurrentVersion.cmd
 set $currentVersionBatchFileSave=%~p0setCurrentVersion.cmd.sav
@@ -108,5 +110,6 @@ echo( & echo %$separator% & echo( & echo   Restoring live version file '%$curren
 copy %$currentVersionBatchFileSave% %$currentVersionBatchFile%
 echo(
 
+:noargs
 echo( & echo   %~nx0 ends.
 endlocal
