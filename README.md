@@ -1,4 +1,4 @@
-# rrs-jenkins-auto-increment
+# jenkins-auto-increment
 Sourced from: https://codereview.stackexchange.com/questions/131584/grom-generalized-release-order-management
 
 Added by Gerard Ryan, 03/2019:
